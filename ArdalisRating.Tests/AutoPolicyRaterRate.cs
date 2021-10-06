@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Xunit;
 
 namespace ArdalisRating.Tests
@@ -11,7 +10,7 @@ namespace ArdalisRating.Tests
         {
             var policy = new Policy() { Type = "Auto" };
             var logger = new FakeLogger();
-            var rater = new AutoPolicyRater(null);
+            var rater = new AutoPolicyRater(logger);
             rater.Logger = logger;
 
             rater.Rate(policy);
@@ -28,12 +27,12 @@ namespace ArdalisRating.Tests
                 Make = "BMW",
                 Deductible = 250m
             };
-            var ratingUpdater = new FakeRatingUpdater();
-            var rater = new AutoPolicyRater(ratingUpdater);
+            var logger = new FakeLogger();
+            var rater = new AutoPolicyRater(logger);
 
-            rater.Rate(policy);
+            var result = rater.Rate(policy);
 
-            Assert.Equal(1000m, ratingUpdater.NewRating.Value);
+            Assert.Equal(1000m, result);
         }
 
         [Fact]
@@ -45,12 +44,12 @@ namespace ArdalisRating.Tests
                 Make = "BMW",
                 Deductible = 500m
             };
-            var ratingUpdater = new FakeRatingUpdater();
-            var rater = new AutoPolicyRater(ratingUpdater);
+            var logger = new FakeLogger();
+            var rater = new AutoPolicyRater(logger);
 
-            rater.Rate(policy);
+            var result = rater.Rate(policy);
 
-            Assert.Equal(900m, ratingUpdater.NewRating.Value);
+            Assert.Equal(900m, result);
         }
     }
 }

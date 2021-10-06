@@ -6,29 +6,39 @@
     /// </summary>
     public class RatingEngine
     {
-        public IRatingContext Context { get; set; } = new DefaultRatingContext();
+        private readonly ILogger _logger;
+        private readonly IPolicySource _policySource;
+        private readonly IPolicySerializer _policySerializer;
+        private readonly RaterFactory _raterFactory;
+
         public decimal Rating { get; set; }
 
-        public RatingEngine()
+        public RatingEngine(ILogger logger,
+            IPolicySource policySource,
+            IPolicySerializer policySerializer,
+            RaterFactory raterFactory)
         {
-            Context.Engine = this;
+            _logger = logger;
+            _policySource = policySource;
+            _policySerializer = policySerializer;
+            _raterFactory = raterFactory;
         }
 
         public void Rate()
         {
-            Context.Log("Starting rate.");
+            _logger.Log("Starting rate.");
 
-            Context.Log("Loading policy.");
+            _logger.Log("Loading policy.");
 
-            string policyJson = Context.LoadPolicyFromFile();
+            string policyJson = _policySource.GetPolicyFromSource();
 
-            var policy = Context.GetPolicyFromJsonString(policyJson);
+            var policy = _policySerializer.GetPolicyFromString(policyJson);
 
-            var rater = Context.CreateRaterForPolicy(policy, Context);
+            var rater = _raterFactory.Create(policy);
 
-            rater.Rate(policy);
+            Rating = rater.Rate(policy);
 
-            Context.Log("Rating completed.");
+            _logger.Log("Rating completed.");
         }
     }
 }
