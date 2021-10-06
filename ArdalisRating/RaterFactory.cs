@@ -10,11 +10,11 @@ namespace ArdalisRating
             {
                 return (Rater)Activator.CreateInstance(
                     Type.GetType($"ArdalisRating.{policy.Type}PolicyRater"),
-                        new object[] { context });
+                        new object[] { new RatingUpdater(context.Engine) });
             }
             catch
             {
-                return new UnknownPolicyRater(context);
+                return new UnknownPolicyRater(new RatingUpdater(context.Engine));
             }
         }
     }

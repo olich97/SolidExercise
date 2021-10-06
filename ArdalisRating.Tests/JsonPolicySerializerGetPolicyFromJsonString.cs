@@ -1,6 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace ArdalisRating.Tests
@@ -23,14 +20,17 @@ namespace ArdalisRating.Tests
         public void ReturnsSimpleAutoPolicyFromValidJsonString()
         {
             var inputJson = @"{
-              ""type"": ""Auto"",
-              ""make"": ""BMW""
-            }";
+  ""type"": ""Auto"",
+  ""make"": ""BMW""
+}
+";
             var serializer = new JsonPolicySerializer();
 
             var result = serializer.GetPolicyFromJsonString(inputJson);
 
-            var policy = new Policy { Type = PolicyType.Auto, Make = "BMW" };
+            var policy = new Policy {
+                Type = "Auto",
+                Make = "BMW" };
             AssertPoliciesEqual(result, policy);
         }
 
