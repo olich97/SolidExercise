@@ -22,9 +22,7 @@ SOLID principles were developed by computer science instructor and author Robert
 
 If you found this course helpful here are some other resources you may like:
 
-- [Weekly Dev Tips Podcast](https://www.weeklydevtips.com/) (see also [YouTube Channel](https://www.youtube.com/channel/UC1OeiOnqUZHVinzRK5MuHsA))
+- [Ardalis](https://ardalis.com/) (see also [YouTube Channel](https://www.youtube.com/channel/UC1OeiOnqUZHVinzRK5MuHsA))
 - [Clean Architecture Solution Template](https://github.com/ardalis/CleanArchitecture)
-- [Live Coding Streams](https://twitch.tv/ardalis)
-- [Group Mentoring with Ardalis](https://devbetter.com)
 - [Clean Code](https://amzn.to/2FNjh2y) on Amazon
 
