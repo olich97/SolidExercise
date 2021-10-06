@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ArdalisRating
+﻿namespace ArdalisRating
 {
     public class LandPolicyRater : Rater
     {
-        public LandPolicyRater(RatingEngine engine, ConsoleLogger logger) : base(engine, logger)
+        public LandPolicyRater(IRatingContext context)
+            :base(context)
         {
         }
 
@@ -26,7 +21,7 @@ namespace ArdalisRating
                 _logger.Log("Insufficient bond amount.");
                 return;
             }
-            _engine.Rating = policy.BondAmount * 0.05m;
+            _context.UpdateRating(policy.BondAmount * 0.05m);
         }
     }
 }

@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ArdalisRating
 {
     public class AutoPolicyRater : Rater
     {
-        public AutoPolicyRater(RatingEngine engine, ConsoleLogger logger) : base(engine, logger)
+        public AutoPolicyRater(IRatingContext context)
+            : base(context)
         {
         }
 
@@ -16,20 +13,18 @@ namespace ArdalisRating
         {
             _logger.Log("Rating AUTO policy...");
             _logger.Log("Validating policy.");
-
             if (String.IsNullOrEmpty(policy.Make))
             {
                 _logger.Log("Auto policy must specify Make");
                 return;
             }
-
             if (policy.Make == "BMW")
             {
                 if (policy.Deductible < 500)
                 {
-                    _engine.Rating = 1000m;
+                    _context.UpdateRating(1000m);
                 }
-                _engine.Rating = 900m;
+                _context.UpdateRating(900m);
             }
         }
     }

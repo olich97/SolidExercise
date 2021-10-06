@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ArdalisRating
+﻿namespace ArdalisRating
 {
     public class FloodPolicyRater : Rater
     {
-        public FloodPolicyRater(RatingEngine engine, ConsoleLogger logger)
-            : base(engine, logger)
+        public FloodPolicyRater(IRatingContext context)
+            : base(context)
         {
         }
 
@@ -33,19 +27,17 @@ namespace ArdalisRating
                 return;
             }
             decimal multiple = 1.0m;
-            if (policy.ElevationAboveSeaLevelFeet < 100)
+            if(policy.ElevationAboveSeaLevelFeet < 100)
             {
                 multiple = 2.0m;
-            }
-            else if (policy.ElevationAboveSeaLevelFeet < 500)
+            } else if (policy.ElevationAboveSeaLevelFeet < 500)
             {
                 multiple = 1.5m;
-            }
-            else if (policy.ElevationAboveSeaLevelFeet < 1000)
+            } else if (policy.ElevationAboveSeaLevelFeet < 1000)
             {
                 multiple = 1.1m;
             }
-            _engine.Rating = policy.BondAmount * 0.05m * multiple;
+            _context.UpdateRating(policy.BondAmount * 0.05m * multiple);
         }
     }
 }
